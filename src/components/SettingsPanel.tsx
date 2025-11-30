@@ -50,22 +50,24 @@ export function SettingsPanel({ pins, onExport, onDelete, onEdit, locationEnable
       </button>
 
       {isOpen && (
-        <div className="absolute inset-0 z-[2000] bg-black/50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg w-full max-w-md max-h-[80vh] flex flex-col">
-            <div className="flex items-center justify-between p-4 border-b">
+        <div className="absolute inset-0 z-[2000] bg-black/50 flex items-center justify-center p-6">
+          <div className="bg-white rounded-2xl w-full max-w-md max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
+            <div className="flex items-center justify-between px-6 py-6">
               <h2 className="text-xl font-semibold">Settings</h2>
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-2 hover:bg-gray-100 rounded-full"
               >
-                <X className="w-5 h-5" />
+                <X className="w-6 h-6" />
               </button>
             </div>
 
-            <div className="p-4 border-b space-y-3">
+            <div className="border-t"></div>
+
+            <div className="px-6 py-6 space-y-4">
               {!locationEnabled && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                  <p className="text-sm text-yellow-800 mb-2">
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                  <p className="text-sm text-yellow-800 mb-3">
                     {locationError || 'Location access not enabled'}
                   </p>
                   <button
@@ -78,7 +80,7 @@ export function SettingsPanel({ pins, onExport, onDelete, onEdit, locationEnable
                 </div>
               )}
               {locationEnabled && (
-                <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                   <p className="text-sm text-green-800">
                     ✓ Location tracking active
                   </p>
@@ -91,19 +93,21 @@ export function SettingsPanel({ pins, onExport, onDelete, onEdit, locationEnable
                 <Download className="w-5 h-5" />
                 Export to CSV
               </button>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-500 mt-2">
                 {pins.length} pin{pins.length !== 1 ? 's' : ''} saved
               </p>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4">
-              <h3 className="font-semibold mb-3">Saved Pins</h3>
+            <div className="border-t"></div>
+
+            <div className="flex-1 overflow-y-auto px-6 py-6">
+              <h3 className="font-semibold mb-4">Saved Pins</h3>
               {pins.length === 0 ? (
                 <p className="text-gray-500 text-sm">No pins yet. Start tagging locations!</p>
               ) : (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {pins.map((pin) => (
-                    <div key={pin.id} className="border rounded-lg p-3">
+                    <div key={pin.id} className="border rounded-lg p-4">
                       {editingId === pin.id ? (
                         <div className="space-y-2">
                           <input
