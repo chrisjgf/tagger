@@ -68,9 +68,9 @@ For the best experience on iOS:
 
 1. **Enable location**: Open settings (gear icon, top-right) and tap "Enable Location"
 2. **Grant permissions**: Allow the app to access your device location when prompted
-3. **Place a pin**: Tap the blue floating button in the bottom-right to save your current location
+3. **Place a pin**: Tap the large blue floating button in the bottom-right to save your current location
 4. **View pins**: Open settings to see all saved pins
-5. **Edit pins**: Click "Edit" on any pin to modify coordinates
+5. **Edit pins**: Click "Edit" on any pin to modify name and coordinates
 6. **Delete pins**: Click "Delete" to remove unwanted pins
 7. **Export data**: Click "Export to CSV" to download all pins as a CSV file
 
@@ -99,9 +99,12 @@ All pins are stored locally in your browser's localStorage. Data persists betwee
 
 ## CSV Format
 
-Exported CSV files contain two columns:
+Exported CSV files contain three columns:
 ```
-latitude,longitude
-37.774929,-122.419418
-37.775432,-122.418912
+name,latitude,longitude
+Coffee Shop,37.774929,-122.419418
+Park,37.775432,-122.418912
+,37.776012,-122.419823
 ```
+
+The name column is optional and will be empty if no name was assigned to the pin.
