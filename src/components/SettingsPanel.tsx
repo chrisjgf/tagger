@@ -39,7 +39,10 @@ export function SettingsPanel({ pins, onExport, onDelete, onEdit, locationEnable
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="absolute top-4 right-4 z-[1000] bg-white rounded-full p-3 shadow-lg hover:bg-gray-50"
+        className="absolute right-4 z-[1000] bg-white rounded-full p-3 shadow-lg hover:bg-gray-50"
+        style={{
+          top: 'calc(1rem + env(safe-area-inset-top))'
+        }}
       >
         <Settings className="w-6 h-6 text-gray-700" />
       </button>

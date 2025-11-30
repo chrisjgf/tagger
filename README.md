@@ -54,12 +54,25 @@ Or connect your GitHub repository to Vercel for automatic deployments.
 
 ## Usage
 
-1. **Grant location permissions**: Allow the app to access your device location for accurate tracking
-2. **Place a pin**: Tap the blue floating button in the bottom-right to save your current location
-3. **View pins**: Open settings (gear icon, top-right) to see all saved pins
-4. **Edit pins**: Click "Edit" on any pin to modify coordinates
-5. **Delete pins**: Click "Delete" to remove unwanted pins
-6. **Export data**: Click "Export to CSV" to download all pins as a CSV file
+### Installing as a Home Screen App (iOS)
+
+For the best experience on iOS:
+
+1. Open the app in **Safari** (not other browsers)
+2. Tap the Share button (square with arrow)
+3. Scroll down and tap **"Add to Home Screen"**
+4. Tap "Add" to confirm
+5. The app will now open in full-screen mode without Safari UI
+
+### Using the App
+
+1. **Enable location**: Open settings (gear icon, top-right) and tap "Enable Location"
+2. **Grant permissions**: Allow the app to access your device location when prompted
+3. **Place a pin**: Tap the blue floating button in the bottom-right to save your current location
+4. **View pins**: Open settings to see all saved pins
+5. **Edit pins**: Click "Edit" on any pin to modify coordinates
+6. **Delete pins**: Click "Delete" to remove unwanted pins
+7. **Export data**: Click "Export to CSV" to download all pins as a CSV file
 
 ## Location Accuracy
 
@@ -68,6 +81,17 @@ The app uses `enableHighAccuracy: true` for the Geolocation API, which:
 - Uses GPS on mobile devices (including iOS)
 - May take longer and consume more battery
 - Provides accuracy information in meters
+
+### iOS Location Permissions
+
+If location access is denied:
+
+1. **Check Location Services**: Settings → Privacy & Security → Location Services (must be ON)
+2. **Safari Permission**: Settings → Privacy & Security → Location Services → Safari Websites
+   - Set to "Ask Next Time" or "While Using the App"
+3. **Reset if needed**: Settings → Safari → Clear History and Website Data
+4. **HTTPS Required**: The app must be accessed via HTTPS (Vercel provides this automatically)
+5. **User Gesture**: On iOS Safari, location must be requested from a button click, not on page load
 
 ## Data Storage
 
