@@ -1,4 +1,4 @@
-import { Settings, X, Download, Trash2, Edit2 } from 'lucide-react'
+import { Settings, X, Download, Trash2, Edit2, MapPin } from 'lucide-react'
 import { useState } from 'react'
 import type { Pin } from '@/types'
 
@@ -7,9 +7,12 @@ interface SettingsPanelProps {
   onExport: () => void
   onDelete: (id: string) => void
   onEdit: (id: string, lat: number, lng: number) => void
+  locationEnabled: boolean
+  locationError: string | null
+  onEnableLocation: () => void
 }
 
-export function SettingsPanel({ pins, onExport, onDelete, onEdit }: SettingsPanelProps) {
+export function SettingsPanel({ pins, onExport, onDelete, onEdit, locationEnabled, locationError, onEnableLocation }: SettingsPanelProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editLat, setEditLat] = useState('')
@@ -54,7 +57,28 @@ export function SettingsPanel({ pins, onExport, onDelete, onEdit }: SettingsPane
               </button>
             </div>
 
-            <div className="p-4 border-b">
+            <div className="p-4 border-b space-y-3">
+              {!locationEnabled && (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                  <p className="text-sm text-yellow-800 mb-2">
+                    {locationError || 'Location access not enabled'}
+                  </p>
+                  <button
+                    onClick={onEnableLocation}
+                    className="w-full flex items-center justify-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                  >
+                    <MapPin className="w-5 h-5" />
+                    Enable Location
+                  </button>
+                </div>
+              )}
+              {locationEnabled && (
+                <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                  <p className="text-sm text-green-800">
+                    ✓ Location tracking active
+                  </p>
+                </div>
+              )}
               <button
                 onClick={onExport}
                 className="w-full flex items-center justify-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
@@ -62,7 +86,7 @@ export function SettingsPanel({ pins, onExport, onDelete, onEdit }: SettingsPane
                 <Download className="w-5 h-5" />
                 Export to CSV
               </button>
-              <p className="text-sm text-gray-500 mt-2">
+              <p className="text-sm text-gray-500">
                 {pins.length} pin{pins.length !== 1 ? 's' : ''} saved
               </p>
             </div>

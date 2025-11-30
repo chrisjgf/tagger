@@ -5,12 +5,14 @@ import { useGeolocation } from '@/hooks/useGeolocation'
 import { usePins } from '@/hooks/usePins'
 
 function App() {
-  const { latitude, longitude, error, loading } = useGeolocation()
+  const { latitude, longitude, error, loading, startTracking } = useGeolocation()
   const { pins, addPin, deletePin, updatePin, exportToCSV } = usePins()
 
   const userLocation = latitude !== null && longitude !== null
     ? [latitude, longitude] as [number, number]
     : null
+
+  const locationEnabled = userLocation !== null
 
   const handleAddPin = () => {
     if (userLocation) {
@@ -20,12 +22,6 @@ function App() {
 
   return (
     <div className="relative w-full h-full">
-      {error && (
-        <div className="absolute top-0 left-0 right-0 z-[1000] bg-red-500 text-white p-4 text-center">
-          {error}
-        </div>
-      )}
-
       {loading && (
         <div className="absolute top-0 left-0 right-0 z-[1000] bg-blue-500 text-white p-2 text-center text-sm">
           Getting your location...
@@ -44,6 +40,9 @@ function App() {
         onExport={exportToCSV}
         onDelete={deletePin}
         onEdit={updatePin}
+        locationEnabled={locationEnabled}
+        locationError={error}
+        onEnableLocation={startTracking}
       />
     </div>
   )

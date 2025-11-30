@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import type { GeolocationState } from '@/types'
 
 export function useGeolocation() {
@@ -7,10 +7,11 @@ export function useGeolocation() {
     longitude: null,
     accuracy: null,
     error: null,
-    loading: true,
+    loading: false,
   })
+  const [watchId, setWatchId] = useState<number | null>(null)
 
-  useEffect(() => {
+  const startTracking = useCallback(() => {
     if (!navigator.geolocation) {
       setState(prev => ({
         ...prev,
@@ -20,7 +21,9 @@ export function useGeolocation() {
       return
     }
 
-    const watchId = navigator.geolocation.watchPosition(
+    setState(prev => ({ ...prev, loading: true, error: null }))
+
+    const id = navigator.geolocation.watchPosition(
       (position) => {
         setState({
           latitude: position.coords.latitude,
@@ -44,10 +47,16 @@ export function useGeolocation() {
       }
     )
 
-    return () => {
-      navigator.geolocation.clearWatch(watchId)
-    }
+    setWatchId(id)
   }, [])
 
-  return state
+  useEffect(() => {
+    return () => {
+      if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId)
+      }
+    }
+  }, [watchId])
+
+  return { ...state, startTracking }
 }
