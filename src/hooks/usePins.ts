@@ -35,15 +35,15 @@ export function usePins() {
     savePins(pins.filter(pin => pin.id !== id))
   }
 
-  const updatePin = (id: string, lat: number, lng: number) => {
+  const updatePin = (id: string, lat: number, lng: number, name?: string) => {
     savePins(pins.map(pin =>
-      pin.id === id ? { ...pin, lat, lng } : pin
+      pin.id === id ? { ...pin, lat, lng, name } : pin
     ))
   }
 
   const exportToCSV = () => {
-    const csv = 'latitude,longitude\n' +
-      pins.map(pin => `${pin.lat},${pin.lng}`).join('\n')
+    const csv = 'name,latitude,longitude\n' +
+      pins.map(pin => `${pin.name || ''},${pin.lat},${pin.lng}`).join('\n')
 
     const blob = new Blob([csv], { type: 'text/csv' })
     const url = URL.createObjectURL(blob)

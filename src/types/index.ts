@@ -2,6 +2,7 @@ export interface Pin {
   id: string
   lat: number
   lng: number
+  name?: string
 }
 
 export interface GeolocationState {

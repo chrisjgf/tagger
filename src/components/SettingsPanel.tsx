@@ -6,7 +6,7 @@ interface SettingsPanelProps {
   pins: Pin[]
   onExport: () => void
   onDelete: (id: string) => void
-  onEdit: (id: string, lat: number, lng: number) => void
+  onEdit: (id: string, lat: number, lng: number, name?: string) => void
   locationEnabled: boolean
   locationError: string | null
   onEnableLocation: () => void
@@ -15,11 +15,13 @@ interface SettingsPanelProps {
 export function SettingsPanel({ pins, onExport, onDelete, onEdit, locationEnabled, locationError, onEnableLocation }: SettingsPanelProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
+  const [editName, setEditName] = useState('')
   const [editLat, setEditLat] = useState('')
   const [editLng, setEditLng] = useState('')
 
   const handleEdit = (pin: Pin) => {
     setEditingId(pin.id)
+    setEditName(pin.name || '')
     setEditLat(pin.lat.toString())
     setEditLng(pin.lng.toString())
   }
@@ -29,7 +31,7 @@ export function SettingsPanel({ pins, onExport, onDelete, onEdit, locationEnable
       const lat = parseFloat(editLat)
       const lng = parseFloat(editLng)
       if (!isNaN(lat) && !isNaN(lng)) {
-        onEdit(editingId, lat, lng)
+        onEdit(editingId, lat, lng, editName.trim() || undefined)
         setEditingId(null)
       }
     }
@@ -105,6 +107,13 @@ export function SettingsPanel({ pins, onExport, onDelete, onEdit, locationEnable
                       {editingId === pin.id ? (
                         <div className="space-y-2">
                           <input
+                            type="text"
+                            value={editName}
+                            onChange={(e) => setEditName(e.target.value)}
+                            className="w-full px-2 py-1 border rounded text-sm"
+                            placeholder="Pin name (optional)"
+                          />
+                          <input
                             type="number"
                             step="any"
                             value={editLat}
@@ -137,7 +146,12 @@ export function SettingsPanel({ pins, onExport, onDelete, onEdit, locationEnable
                         </div>
                       ) : (
                         <>
-                          <div className="text-sm font-mono mb-2">
+                          {pin.name && (
+                            <div className="text-sm font-semibold mb-1">
+                              {pin.name}
+                            </div>
+                          )}
+                          <div className="text-sm font-mono mb-2 text-gray-600">
                             <div>{pin.lat.toFixed(6)}, {pin.lng.toFixed(6)}</div>
                           </div>
                           <div className="flex gap-2">
